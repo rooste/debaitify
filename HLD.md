@@ -1,305 +1,300 @@
 # Debaitify — High-Level Design
 
-> **Scope note (2026-09-07):** this document describes the original
-> article-page-first design. The project has since been refocused on
-> **front-page teaser rewriting**, and headline generation now sits behind a
-> pluggable provider seam with a user-selectable strategy. See
-> [README.md](./README.md) for current behaviour; this file is being rewritten.
+**Status:** v3 (current) · **Date:** 2026-09-07 · **Owner:** @rooste
 
-**Status:** Draft v2 · **Date:** 2026-09-06 · **Owner:** @rooste
-
-> v2 changes: API-key model settled (§3); site configuration moved to JSON (AD-11);
-> caching promoted to a first-class requirement and re-keyed on article ID (AD-12);
-> §5 added from live inspection of both target sites; cost table corrected against
-> real article sizes.
+Implementation detail: [LLD.md](./LLD.md). User-facing docs: [README.md](./README.md).
 
 ---
 
 ## 1. Problem
 
-Finnish tabloids — primarily **Iltalehti** (`iltalehti.fi`) and **Ilta-Sanomat**
-(`is.fi`) — routinely publish headlines engineered for curiosity gap rather than
-information: withheld subjects, withheld outcomes, trailing-ellipsis pull quotes.
-The article body usually contains the actual news in its first two paragraphs.
+Iltalehti and Ilta-Sanomat write front-page teasers for the curiosity gap rather
+than for information: withheld subjects, withheld outcomes, trailing-ellipsis
+pull quotes. The reader scanning a front page cannot tell which stories matter
+without clicking, which is the point.
 
-A real specimen, captured 2026-09-06:
+**Debaitify rewrites those teaser headlines in place, on the front page, into
+accurate descriptive ones.**
+
+A captured example:
 
 | | |
 |---|---|
-| **Published headline** | "Asiantuntijalta todella karu arvio Moskovan tapaamisesta: ”Ei tässä ole tapahtunut mitään sellaista…”" |
-| **What the article says** | A Tampere University professor assesses that the Witkoff–Kushner Moscow visit did not move Russia off its terms |
+| **Published** | "Äärioikeistolle murskavoitto – Saksassa tapahtui jotain, mitä ei ole nähty sitten vuoden 1945" |
+| **The story** | The far right won the Saxony-Anhalt state election |
 
-**Debaitify** is a browser extension that reads the article the reader is already
-looking at and replaces the clickbait headline in-place with an accurate,
-descriptive one generated from the article body.
+## 2. The insight the design rests on
 
-## 2. Goals and non-goals
+Both sites publish, alongside every clickbait teaser, **a plain factual lead
+sentence they wrote themselves**. It sits in the page's hydration state next to
+the title.
 
-### Goals (v1)
+That single fact sets the economics. Grounding a rewrite in the lead costs one
+batched model call per front page (~$0.001). Grounding it in the article text
+would mean sixty page fetches and sixty calls (~$0.60). Same product, 500x apart.
 
-| # | Goal |
+The lead is not always usable — live blogs carry boilerplate — so the design must
+let the model decline rather than invent. A fabricated headline is worse than a
+clickbait one.
+
+## 3. Scope
+
+### In scope
+
+| | |
 |---|---|
-| G1 | On an Iltalehti or Ilta-Sanomat article page, replace the `<h1>` with an accurate generated headline, in Finnish, before the reader reads the original |
-| G2 | Never leave the page worse than without the extension — any failure reverts to the original headline |
-| G3 | **Generate each article's headline at most once, ever.** A page refresh, a revisit, or a second tab must cost zero tokens |
-| G4 | Run on the user's own Claude API key, entered in an options page |
-| G5 | Site knowledge lives in editable JSON, not in compiled code |
-| G6 | Installable by a handful of people via unpacked sideload, with no backend |
+| **Primary** | Front-page and section-page teaser rewriting on Iltalehti and Ilta-Sanomat |
+| **Secondary** | Article-page headline rewriting, grounded in the full body |
+| **Model** | Bring-your-own API key. No backend, ever |
+| **Distribution** | Unpacked sideload |
 
-### Non-goals (v1)
+### Out of scope (v1)
 
-- Rewriting headlines on **front pages / link lists** (see §6 — this is now better understood and still deferred)
-- Firefox / Safari packaging (kept *possible* by API discipline, not shipped)
 - Chrome Web Store listing
-- A hosted proxy that holds the API key
-- Detecting *whether* a headline is clickbait — v1 rewrites every matched article
-- Any telemetry, analytics, or server-side logging
+- Firefox packaging (kept *reachable*, §5.4, not shipped)
+- A hosted proxy holding a shared key
+- Detecting *whether* a headline is clickbait — every teaser is a candidate
+- Telemetry of any kind
 
-## 3. Decision: API key model (settled)
+## 4. Architecture
 
-**Every user supplies their own Anthropic API key.** This is now fixed, and it is
-the decision the rest of the architecture hangs off. Consequences, stated
-explicitly so they are not re-litigated later:
+```
+┌─────────────────────── page (iltalehti.fi) ───────────────────────┐
+│                                                                   │
+│  MAIN world              │  ISOLATED world                        │
+│  ┌────────────────────┐  │  ┌──────────────────────────────────┐  │
+│  │ bridge-main.ts     │  │  │ content-script.ts                │  │
+│  │ reads window.App   │──┼─▶│  ├─ front.ts   (teasers)         │  │
+│  │ posts id→lead map  │  │  │  ├─ extract.ts (article bodies)  │  │
+│  └────────────────────┘  │  │  ├─ swap.ts    (DOM writes)      │  │
+│                          │  │  └─ antiflash.ts                 │  │
+└──────────────────────────┼──┴───────────────┬──────────────────┴──┘
+                           │                  │ runtime messages
+                           │  ┌───────────────▼──────────────────┐
+                           │  │ service worker                   │
+                           │  │  ├─ cache.ts   (article-id keyed)│
+                           │  │  ├─ queue.ts   (dedupe + limit)  │
+                           │  │  └─ headlines.ts (prompts,       │
+                           │  │        schemas, output guard)    │
+                           │  └───────────────┬──────────────────┘
+                           │                  │ ModelClient.generate()
+                           │  ┌───────────────▼──────────────────┐
+                           │  │ providers/ — the only vendor code│
+                           │  └───────────────┬──────────────────┘
+                           │                  │ HTTPS
+                           │            ┌─────▼─────┐
+                           │            │ Claude API│
+                           │            └───────────┘
+```
 
-| Consequence | Effect on design |
-|---|---|
-| No backend exists | No hosting cost, no uptime obligation, no abuse surface, no DPA. The extension is a client and nothing else |
-| The key lives in the user's browser | It must never enter a content script (§7 AD-2). It is stored in `chrome.storage.local`, which is unencrypted-at-rest — acceptable for a user's own key, and stated plainly in `PRIVACY.md` |
-| Cost is borne per-user | Caching stops being an optimization and becomes a **product requirement** (G3). A user watching their own bill will not tolerate paying twice for one article |
-| Rate limits are per-user | No global quota to manage; a single reader will never approach a tier-1 limit. No server-side rate limiting to build |
-| Distribution is sideload | No store review, no privacy-policy gate, no host-permission scrutiny in v1. Onboarding cost is "paste a key", paid once |
-| The SDK must run in a browser context | Requires `dangerouslyAllowBrowser: true`, which exists precisely to stop people shipping *someone else's* key to a client. Here the key is the user's own — the flag is set knowingly and documented |
+**The security boundary is the service worker.** The API key exists there and
+nowhere else. A content script sends text out and receives strings back; that is
+the whole of its privilege. The MAIN-world bridge is more exposed still — it
+shares a global scope with the page — so it reads only and holds nothing.
 
-The one thing this model must not do is calcify. Tier 3 (a hosted proxy) stays
-reachable through the `HeadlineProvider` seam in §9.
+## 5. Extension points
 
-## 4. Users
+The project is organized so that the four things most likely to change are each
+isolated behind one seam. Adding to any of them should touch one place.
 
-1. **Setup (once):** install unpacked, open Options, paste a key, close it.
-2. **Reading (constant):** click an iltapaska link, land on the article, see a
-   headline that describes the article.
+### 5.1 Sites — data, not code
 
-No account, no sign-in, no server-side identity.
+Everything about a site lives in `src/sites/sites.json`: hosts, the article URL
+pattern (whose named `id` group becomes the cache key), and **ordered candidate
+selector lists** for teasers, headline, lead and body.
 
-## 5. What we are actually working with
+Ordered lists are the resilience strategy. Iltalehti's markup is semantic and
+stable (`h1.article-headline`); Ilta-Sanomat's is design-token generated
+(`nof-component-article-title-m-mobile …`) and will churn. Precise selector
+first, structural one last, and a redesign degrades instead of breaking.
 
-Findings from fetching and parsing both sites on 2026-09-06. These are measured,
-not assumed, and several of them changed the design.
+Consequences worth stating plainly:
 
-### 5.1 Article pages are server-rendered; front pages are not
+- Fixing a broken site is a **data edit**, not a release.
+- Users can override the config from the Options page without rebuilding. An
+  invalid override is discarded wholesale rather than applied.
+- Adding a **new host** additionally needs a rebuild, because content-script
+  matches are static in the manifest. The manifest is generated *from*
+  `sites.json`, so the two cannot drift.
 
-The Iltalehti front page ships a 350 KB document whose `<body>` is
-`<div id="app">` plus header/nav chrome and **six** teaser titles. The actual
-article grid hydrates client-side from a 268 KB `window.App = {…}` blob. The IS
-front page behaves the same way (670 KB, eight article links in the shell).
-
-**Article** pages, by contrast, are fully server-rendered — the `<h1>` is present
-in the initial HTML on both sites. This is what makes the anti-flash approach
-viable: there is something to hide at `document_start`.
-
-### 5.2 The two sites are structurally opposite
-
-| | Iltalehti | Ilta-Sanomat |
-|---|---|---|
-| Article URL | `/<category>/a/<uuid>` | `/<category>/art-<digits>.html` |
-| Headline | `h1.article-headline[itemprop="headline"]` — semantic, stable | `h1.nof-component-article-title-m-mobile text-nof-foreground-primary sm:…` — design-token utility classes, **will churn** |
-| Lead | `.article-description[itemprop="description"]` | `[class*="article-ingress"]` |
-| Body | `.article-body` → `p.paragraph` | `.article-body` → `p` |
-| JSON-LD | **none** | `NewsArticle` with `isAccessibleForFree` + `hasPart.cssSelector` |
-| Headline text | plain | wrapped in a `<span>` |
-
-Two consequences. First, **selectors must be an ordered candidate list**, not a
-single string — the precise selector first, a structural one last. Second, both
-sites have **exactly one `<h1>` on an article page**, which makes bare `h1` a
-genuinely reliable last resort and is the reason a site redesign should degrade
-rather than break.
-
-### 5.3 Ilta-Sanomat's paywall is machine-readable; Iltalehti's is not
-
-IS publishes JSON-LD carrying `isAccessibleForFree` and
-`hasPart: {cssSelector: ".paywall-section"}`. That is a reliable paywall
-detector and it **resolves open question O4** — IS stays a v1 target.
-
-Iltalehti ships no JSON-LD at all, and the free article we sampled contains no
-paywall marker of any kind. Detecting IL Plus articles needs a paywalled fixture
-we do not yet have; until then the minimum-body-length gate is the defence.
-
-### 5.4 Articles are short — cheaper than estimated
-
-| Site | Words | Characters |
-|---|---|---|
-| Iltalehti sample | 225 | 1,965 |
-| Ilta-Sanomat sample | 233 | 1,999 |
-
-The v1 HLD assumed ~600-word articles. Tabloid articles are a third of that,
-which roughly halves the per-article cost (§12).
-
-### 5.5 Both sites already publish an honest summary next to the clickbait
-
-Every article carries a one-sentence lead that is not clickbait:
-
-> **Headline:** "Asiantuntijalta todella karu arvio Moskovan tapaamisesta: ”Ei tässä ole tapahtunut mitään sellaista…”"
-> **Lead:** "Asiantuntijan mukaan Yhdysvallat keskittyy taloudellisiin intresseihin."
-
-The front-page hydration state carries the same field as `lead` for every teaser.
-Two uses: a **zero-cost fallback** when the API is unavailable or the key is
-missing, and a cheap input for eventual front-page work. It is also decent
-evidence that the clickbait framing is a deliberate editorial choice rather than
-an accident of headline-writing — the honest sentence already exists.
-
-### 5.6 Text needs normalizing before comparison
-
-Front-page titles contain soft hyphens (U+00AD): `Asian­tuntijalta`. Any
-title-similarity matching (the fallback headline finder) must strip U+00AD and
-normalize whitespace, or it will fail to match a headline against itself.
-
-## 6. Deferred, with new information: front-page rewriting
-
-Now better understood. Three viable routes, none in v1:
-
-1. **DOM observation** of teaser elements as they render. Works from the isolated
-   world, no extra permissions. Most likely choice.
-2. **Reading `window.App`** for the full teaser list including `lead`. Requires a
-   `world: "MAIN"` content script — the blob is a JS object literal containing
-   bare `undefined`, so it is not parseable as JSON from outside anyway. More
-   power, more attack surface.
-3. **Lead substitution** — replace teaser titles with the publisher's own `lead`
-   field. Costs nothing, needs no API call, and is available for every teaser.
-
-Route 3 is interesting enough to prototype before route 1: it may deliver most of
-the value of front-page debaiting for zero tokens. Deliberately out of v1 scope.
-
-## 7. Components
-
-| Component | Runs in | Responsibility |
-|---|---|---|
-| **Content script** | Page (isolated world), per matched tab | Locate the headline node, extract article text per site config, request a rewrite, perform the DOM swap, own the anti-flash lifecycle, observe navigation |
-| **Site config** | JSON, bundled + user overrides | All per-site knowledge: hosts, article URL pattern and ID extraction, selector candidate lists, strip lists, paywall signals |
-| **Extractor** | Content script | Config-driven extraction first, Mozilla `Readability` as fallback, plus a quality gate |
-| **Service worker** | Extension background | Sole owner of the API key and the Claude client; cache read/write; in-flight de-duplication; concurrency and error mapping |
-| **Cache** | `chrome.storage.local` | Article-ID-keyed store with TTL, LRU, and negative caching |
-| **Options page** | Extension page | API key, model, per-site toggles, site-config editor, cache inspector/purge |
-
-**Key boundary:** the API key never enters a content script, and therefore never
-shares an execution context with page-controlled code. The content script sends
-text out and receives a string back; that is the whole of its privilege.
-
-## 8. Architectural decisions
-
-| ID | Decision | Rationale | Alternatives rejected |
-|---|---|---|---|
-| **AD-1** | Manifest V3, Chrome-first | MV2 is dead; the service worker is the natural home for a privileged network client | — |
-| **AD-2** | API call in the **service worker** | Keeps the key out of the tab process; extension-origin fetches with `host_permissions` sidestep the page's CORS context | Calling from the content script |
-| **AD-3** | **Config-driven extraction, Readability as fallback** | §5.2 shows both sites have clean body containers; a direct `.article-body → p` read is cleaner, cheaper and more predictable than Readability. Readability still covers unknown sites and redesigns | Readability-only (loses precision), config-only (no graceful degradation) |
-| **AD-4** | Selectors are **ordered candidate lists** | IS's utility classes will churn; IL's semantic ones will not. One list expresses both without branching | Single selector per field |
-| **AD-5** | **Tier 1 distribution**, BYO key — settled in §3 | Zero operating cost, zero review latency, zero abuse surface | Tier 2 store listing, Tier 3 backend |
-| **AD-6** | Default model **`claude-opus-5`**, user-selectable | Best headline quality; `effort: "low"` keeps latency and cost down. A bad headline is worse than no headline, and it is the only thing the product does | Hard-coding a cheap model |
-| **AD-7** | **Hide-then-reveal** with a hard timeout, never `display: none` | Prevents the flash without layout shift, and guarantees the headline becomes visible even if everything fails | Pre-fetch on hover, swap-after-paint |
-| **AD-8** | **`MutationObserver` + history hooks**, not a one-shot run | Both sites are SPAs that mutate in place (§5.1) | One-shot content script |
-| **AD-9** | *(superseded by AD-12)* | | |
-| **AD-10** | **Revert on refusal** | Crime coverage is routine on these sites and will occasionally trip a classifier; the graceful product behaviour is already correct | Server-side model fallbacks |
-| **AD-11** | **Site configuration in JSON** (`src/sites/sites.json`), bundled defaults merged with user overrides in storage | Selectors are data with a short half-life; treating them as code means a rebuild for a CSS change. JSON lets a user fix a broken site themselves, and lets us ship a fix as a one-line diff. Schema-validated on load, with fallback to bundled config on invalid override | TypeScript adapter modules (v1 design) — precise but requires a build to change a selector |
-| **AD-12** | **Cache keyed by `siteId:articleId`**, extracted from the URL by the site config's named regex group | Supersedes AD-9's normalized-URL key. The same article is reachable via tracking-decorated URLs, front-page links, AMP-ish variants and the canonical URL; an ID key collapses all of them to one entry. Falls back to a normalized-URL hash for unknown sites | Normalized URL (misses variants), content hash (requires extraction before the cache check, defeating the fast path) |
-| **AD-13** | **Negative caching** of refusals and invalid output; **never** cache transient failures | A refusal costs tokens. Refreshing a refused article five times must not bill five times. Network errors and 429s are transient and must stay retryable | Cache nothing (violates G3), cache everything (a network blip poisons an article for 30 days) |
-
-## 9. The extensibility seam
-
-Everything the content script knows about headline generation is:
+### 5.2 Providers — one method
 
 ```ts
-interface HeadlineProvider {
-  rewrite(req: RewriteRequest): Promise<RewriteResult>;
+interface ModelClient {
+  generate<T>(req: GenerateRequest<T>): Promise<GenerateResult<T>>;
 }
 ```
 
-v1 ships one implementation, `ClaudeDirectProvider`, in the service worker. A
-future Tier 3 build swaps in `ProxyProvider` — same interface, pointed at a
-Debaitify backend — and the content script, site config, cache and DOM logic are
-untouched. This is what lets §3 be settled now without foreclosing it.
+Everything Debaitify needs from an LLM is: given a system prompt, a user message
+and a schema, return a value matching that schema. Prompts, batching, output
+validation, caching, cost accounting and failure classification all live *above*
+that line and are vendor-neutral.
 
-## 10. Caching (G3)
+Claude is implemented. OpenAI, Gemini and Ollama are **declared and marked
+unavailable** — they appear in the Options dropdown greyed out, because a
+disabled option that says "not yet supported" is more honest than hiding the
+direction of travel.
 
-Elevated from an optimization to a requirement, because under BYO-key the user
-pays for every regeneration.
+A test asserts no vendor name appears outside `src/providers/`, with one
+documented exception (§5.5).
 
-| Property | Design |
-|---|---|
-| Key | `<siteId>:<articleId>` (AD-12) |
-| Store | `chrome.storage.local`, one entry per key, persistent across restarts |
-| Survives | Page refresh, tab close, browser restart, URL tracking-parameter churn, front-page link vs canonical URL |
-| Positive TTL | 30 days |
-| Negative TTL | 24 hours, for `refusal` and `invalid-output` only |
-| Never cached | `rate-limited`, `api-error`, `timeout`, `no-api-key` — all retryable |
-| Invalidation | Entry carries `promptVersion` and `model`; a mismatch is a miss, so changing the prompt does not serve stale headlines |
-| In-flight dedupe | A refresh during generation joins the existing promise rather than starting a second billed call |
-| Eviction | 500-entry cap, TTL sweep then LRU |
+### 5.3 Strategies — a user-visible cost/quality dial
 
-The fast path — cache hit — must complete before extraction begins. Checking the
-cache requires only the URL, which is available at `document_start`.
-
-## 11. Data and privacy
-
-| Data | Where it goes | Retention |
+| Strategy | Cost / fresh front page | Grounding |
 |---|---|---|
-| Article body text | `api.anthropic.com`, once per article ever | Per Anthropic's API retention policy |
-| Anthropic API key | `chrome.storage.local` only | Until the user clears it |
-| Generated headlines | `chrome.storage.local` | 30-day TTL, LRU-capped |
-| Browsing history | Nowhere | — |
+| `lead` | free, no key | The publisher's own sentence, verbatim |
+| `model-lead` *(default)* | ~$0.001 | Title + lead, one batched call |
+| `model-article` | ~$0.60 | Full article text, fetched lazily on scroll |
 
-Debaitify never sends the page URL to the API — only extracted body text. No
-analytics. `PRIVACY.md` ships with the extension, because "this reads the page
-and sends it to a third party" is a claim a user is entitled to see in writing
-before sideloading.
+This is a setting rather than a decision because the options differ by 500x —
+that is the user's money, and the right answer depends on how much they read.
 
-## 12. Cost model (corrected)
+Adding a strategy means extending the `Strategy` union and adding a branch in
+`front.ts`. The cache, providers and site config are unaffected.
 
-Measured article bodies are ~2,000 characters (§5.4). Finnish tokenizes at
-roughly 2.5–3 characters per token, so budget ~750 input tokens for the body plus
-a ~200-token system prompt, and ~200 output tokens (headline plus low-effort
-thinking).
+### 5.4 Platform — the Firefox seam
 
-| Model | $/1M in | $/1M out | ≈ cost / article | Articles per $1 |
-|---|---|---|---|---|
-| `claude-opus-5` (default) | $5.00 | $25.00 | ~$0.010 | ~100 |
-| `claude-haiku-4-5` (opt-in) | $1.00 | $5.00 | ~$0.002 | ~500 |
+Every extension API call goes through `src/shared/platform.ts`. Chrome MV3 and
+Firefox MV3 differ mainly in the background declaration and the namespace
+(`chrome` vs `browser`). Keeping call sites away from the raw namespace makes a
+Firefox build a manifest change plus one file rather than a port.
 
-At 20 *new* articles a day: Opus 5 ≈ **$6/month**, Haiku ≈ **$1.20/month**.
-Re-reads are free by construction (G3). Still estimates — P1 logs real `usage`
-and this table gets corrected from data.
+### 5.5 The one deliberate coupling
 
-## 13. Risks
+`shared/settings.ts` names `claude` and `claude-opus-5` as defaults. Importing
+the provider registry there would drag the vendor SDK into the **content-script
+bundle**, since settings load on every page — a real cost for a cosmetic win.
+Three tests assert those literals stay in step with the registry.
+
+## 6. How a page is processed
+
+The content script picks one of two modes by asking the site config whether the
+current path yields an article id. That single question is the article test;
+there is no separate heuristic.
+
+### 6.1 Front pages (primary)
+
+```
+teaser anchors found in DOM        →  id parsed from href
+MAIN-world bridge supplies leads   →  id → lead
+cache consulted per id             →  hits returned free
+remainder sent as ONE batch        →  id → headline
+titles swapped in place            →  no hiding, no layout shift
+```
+
+Titles are **never hidden** on a front page. Blanking sixty headlines for a
+second would make the site look broken; the reader is scanning, so a brief
+glimpse of the original is the better trade.
+
+### 6.2 Article pages (secondary)
+
+One headline, grounded in the full body. Here hiding *is* right — there is a
+single thing to read and a flash of clickbait defeats the purpose — so the
+headline is hidden at `document_start` and revealed when the rewrite lands.
+
+Two independent guarantees stop that ever going wrong: a JS reveal timeout, and
+a CSS animation failsafe that fires even if the script throws. No code path can
+leave a headline permanently invisible.
+
+## 7. Caching
+
+Under bring-your-own-key the user pays for every regeneration, so caching is a
+correctness requirement, not an optimization.
+
+| | |
+|---|---|
+| **Key** | `c:<siteId>:<articleId>` — the id from the URL, not the URL |
+| **Why** | The same story appears as a front-page link, a canonical URL and a UTM-decorated share link. An id key collapses all of them |
+| **Positive TTL** | 30 days |
+| **Negative TTL** | 24 hours, for `refusal` and `invalid-output` only |
+| **Never cached** | `rate-limited`, `api-error`, `timeout`, `no-api-key` — transient, must stay retryable |
+| **Invalidation** | Entries carry `provider`, `model` and `promptVersion`; a mismatch is a miss, so switching model invalidates rather than deletes |
+| **Provenance** | Entries are tagged `lead` or `body`. The article path refuses lead-grade entries and regenerates |
+
+**Negative caching matters more than it looks.** A model declining costs tokens.
+Without it, every refresh re-pays to be told the same teaser is unusable.
+
+## 8. Cost
+
+Measured: teaser leads are one sentence; article bodies run ~2,000 characters
+(~230 words). Finnish tokenizes at roughly 2.5–3 characters per token.
+
+| | Input | Output | Per front page |
+|---|---|---|---|
+| `model-lead`, Opus 5 | ~2,500 tok | ~800 tok | **~$0.03** first load, ~0 after cache |
+| `model-lead`, Haiku 4.5 | same | same | **~$0.006** |
+| `model-article`, Opus 5 | ~60 × 1,000 tok | ~60 × 200 tok | **~$0.60** |
+
+Estimates. The implementation logs real `usage`; this table should be replaced
+with measurements once it has run against a live page.
+
+## 9. Privacy and security
+
+| Data | Destination | Retention |
+|---|---|---|
+| Teaser titles + lead sentences | The configured provider | Provider's policy |
+| Article body text (`model-article` only) | Same | Same |
+| API keys | `chrome.storage.local` | Until cleared |
+| Generated headlines | `chrome.storage.local` | 30 days, 500 entries |
+| Page URLs, browsing history | **Nowhere** | — |
+
+No analytics, no telemetry, no Debaitify server. Keys are stored unencrypted,
+which is what `chrome.storage.local` offers — stated plainly in
+[PRIVACY.md](./PRIVACY.md) rather than glossed.
+
+Host permissions are three specific origins. No `tabs`, no `activeTab`, no
+`<all_urls>`.
+
+## 10. Decisions
+
+| ID | Decision | Rationale |
+|---|---|---|
+| **AD-1** | Manifest V3, Chrome-first | MV2 is dead; the service worker is the natural home for a privileged network client |
+| **AD-2** | API key confined to the service worker | Never shares an execution context with page-controlled code |
+| **AD-3** | MAIN-world bridge for lead text | The lead exists only in `window.App`, invisible to an isolated content script. Read-only, no credentials, posts only strings the page already rendered |
+| **AD-4** | Teaser identity = article id from href | Survives re-renders, lazy loading, and the same story appearing twice. Text or DOM paths would not |
+| **AD-5** | Batch the whole front page into one call | ~60 separate calls would be slower, pricier and rate-limit-prone |
+| **AD-6** | The model may return null | Boilerplate leads exist. Declining is a valid answer and is cached |
+| **AD-7** | Swap in place on front pages; hide on article pages | Different reading modes deserve different trade-offs (§6) |
+| **AD-8** | Site knowledge as JSON | Selectors have a short half-life; treating them as code means a rebuild for a CSS change |
+| **AD-9** | Ordered candidate selectors | One list expresses both a stable site and a churning one without branching |
+| **AD-10** | Cache on article id, with provenance and negative entries | §7 |
+| **AD-11** | Provider seam at `generate()` | The narrowest interface that still lets prompts and validation stay shared |
+| **AD-12** | Strategy as a setting | A 500x cost range is the user's call, not ours |
+| **AD-13** | Manifest generated from `sites.json` | Permissions cannot drift from configured hosts |
+| **AD-14** | Entry points must not share a basename | Both were `index.ts`; the bundler collided their chunk names and the service worker silently loaded the content script. The extension ran and did nothing |
+
+## 11. Risks
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| IS design-token classes churn | IS silently stops working | Ordered candidate selectors ending in bare `h1` (§5.2); JSON config means the fix is a data edit, not a release |
-| Site redesign breaks extraction | Extension does nothing | Readability fallback (AD-3) + saved fixtures reproduce the break offline |
-| Latency makes the hidden headline feel broken | Bad UX on every article | Hard 1.5 s reveal timeout, non-negotiable |
-| Model produces a subtly wrong headline | Misinforms the reader — the one unacceptable failure | Prompt constraints, structured output, length validation, original always on hover and one-click revert |
-| IL Plus articles extract to a stub | Headline generated from a teaser | Minimum-length gate; IL paywall detection is an open ⚠ item |
-| API key exfiltration | Financial | Key confined to the service worker; no `eval`; no remote code; three specific `host_permissions` |
-| A bad user config override | Extension breaks on a site | Schema validation on load, fallback to bundled config, "reset to defaults" in Options |
+| IS design-token classes churn | IS stops working | Ordered selectors ending in structural fallbacks; fix is a data edit |
+| `window.App` shape changes | No leads → nothing rewritten | Bridge is try/caught and reports its source; `lead` strategy degrades to nothing rather than breaking the page |
+| Model writes a subtly wrong headline | **Misinforms the reader — the one unacceptable failure** | Grounded prompt, structured output, output guard, permission to decline, original preserved on hover and one-click revert |
+| Provider rate limits on a big batch | Partial page | Chunked at 40, SDK retry, uncached on transient failure |
+| A bad user config override | Extension breaks on a site | Schema-validated; invalid overrides discarded wholesale |
+| Key exfiltration | Financial | Service-worker-only, no `eval`, no remote code, three host permissions |
 
-## 14. Phasing
+## 12. Where this expands
 
-| Phase | Scope | Estimate |
-|---|---|---|
-| **P0 — Walking skeleton** | One site, hardcoded key, no cache, headline swap works | ~4 h |
-| **P1 — v1 complete** | Both sites via JSON config, config-driven extraction + Readability fallback, cache per §10, anti-flash, navigation observer, options page | ~6 h |
-| **P2 — Polish** | Revert toggle, hover-original, per-site toggles, config editor UI, model picker, popup diagnostics | ~1 week of evenings |
-| **P3 — Optional** | Front-page lead substitution (§6 route 3), Chrome Web Store, Firefox build | +1–2 days each |
+Roughly in order of value:
 
-## 15. Open questions
+1. **Confirm against a live page.** Nothing here has met the real hydrated DOM.
+2. **More sites.** HS, Yle, MTV — a `sites.json` entry plus a rebuild each.
+3. **A second provider.** Proves the seam; Ollama would also make the extension
+   free to run.
+4. **Quality feedback.** The popup already shows the original; a thumbs-down
+   that pins a bad rewrite would build an eval set.
+5. **Firefox.** §5.4.
+6. **Chrome Web Store.** Needs icons, a privacy policy, and review of the
+   host-permission footprint.
+
+## 13. Open questions
 
 | # | Question | Status |
 |---|---|---|
-| O1 | Beyond Iltalehti and IS, any v1 domains? | **Closed — no.** Adding a host needs a manifest match, so user-added sites require optional permissions and runtime script registration; that is P2 |
-| O2 | Firefox now or later? | **Closed — later.** Avoid Chrome-only APIs so it stays a packaging exercise |
-| O3 | Visible toggle in v1 or fire-and-forget? | **Closed — fire-and-forget** on the page, plus a toolbar popup with status and revert |
-| O4 | Is IS partial-paywall content extractable? | **Closed — yes**, and paywalled articles are detectable via JSON-LD `isAccessibleForFree` (§5.3) |
-| O5 | How do we detect an Iltalehti Plus article? | **Open.** Needs a paywalled IL fixture. Min-length gate is the interim defence |
-| O6 | Is the publisher's `lead` good enough to skip the API on front pages? | **Open, worth a P3 prototype** (§6 route 3) |
-
----
-
-*Implementation detail lives in [LLD.md](./LLD.md). Site data lives in
-[`src/sites/sites.json`](./src/sites/sites.json).*
+| O1 | Does `window.App` carry leads for lazy-loaded teasers? | **Open** — the one assumption never tested live |
+| O2 | Is the lead sufficient for good headlines in practice? | **Open** — needs a manual quality pass |
+| O3 | How do we detect an Iltalehti Plus article? | **Open** — IL ships no JSON-LD; needs a paywalled fixture |
+| O4 | Where does IS keep runtime teaser data? | **Open** — `__NEXT_DATA__` covers only SSR'd teasers |
+| O5 | Should fixtures stay in-repo? | **Open** — 2 MB of third-party HTML; tests depend on it |

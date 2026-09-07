@@ -162,6 +162,11 @@ yet been confirmed against a live page**: the front-page code was written agains
 pre-hydration HTML with 6 teasers, where the real page renders dozens, and no
 live API call has been made from the extension yet.
 
+Design docs are current: [HLD.md](./HLD.md) covers architecture and the
+extension points, [LLD.md](./LLD.md) the implementation — including §14, which
+is a set of step-by-step recipes for adding a site, a provider, a strategy, a
+browser or a page mode.
+
 Known gaps:
 
 - **Ilta-Sanomat is partial.** Only some of its teasers carry an ingress, and
@@ -170,8 +175,6 @@ Known gaps:
 - **Iltalehti paywall detection is unverified** — IL ships no JSON-LD, so there
   is no confirmed signal for a Plus article. The minimum-length gate is the
   interim defence.
-- [HLD.md](./HLD.md) and [LLD.md](./LLD.md) still describe the earlier
-  article-page-first design and are being rewritten.
 
 ## Licence
 
