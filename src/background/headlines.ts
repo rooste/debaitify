@@ -90,7 +90,9 @@ export async function generateFromTeasers(
 export function isAcceptable(headline: string, original: string): boolean {
   if (headline.length < 15 || headline.length > 120) return false;
   if (headline.split(/\s+/).length > 14) return false; // prompt says 12; allow slack
-  if (/[?…]/.test(headline)) return false;
+  // Both forms: sites write a trailing tease as "..." far more often than "…",
+  // so checking only U+2026 let the commonest clickbait shape straight through.
+  if (/[?…]|\.\.\./.test(headline)) return false;
   // Finnish opens quotes with ”, not “ — both must be rejected.
   if (/^[“”‘’"'«]/.test(headline)) return false;
   if (/\p{Lu}{5,}/u.test(headline)) return false;

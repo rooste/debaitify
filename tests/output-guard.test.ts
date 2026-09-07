@@ -27,3 +27,14 @@ describe("isAcceptable", () => {
     expect(isAcceptable(ORIGINAL, ORIGINAL)).toBe(false);
   });
 });
+
+describe("ellipsis handling", () => {
+  it("rejects both the three-period and single-character forms", () => {
+    expect(isAcceptable("Moskovan tapaaminen tuotti yllätyksen...", ORIGINAL)).toBe(false);
+    expect(isAcceptable("Moskovan tapaaminen tuotti yllätyksen…", ORIGINAL)).toBe(false);
+  });
+
+  it("still accepts a plain sentence containing a full stop", () => {
+    expect(isAcceptable("Professori arvioi rauhan olevan kaukana.", ORIGINAL)).toBe(true);
+  });
+});
