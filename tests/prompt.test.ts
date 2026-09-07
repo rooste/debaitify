@@ -55,6 +55,14 @@ describe("prompt content", () => {
     }
   });
 
+  it("warns against answering with the article's main topic", () => {
+    // The v3 failure: accurate summaries that leave the tease unresolved.
+    for (const p of [SYSTEM_PROMPT, BATCH_SYSTEM_PROMPT]) {
+      expect(p).toContain("NOT the article's main subject");
+      expect(p).toContain("plausible but WRONG");
+    }
+  });
+
   it("permits the batch model to decline, and says why", () => {
     expect(BATCH_SYSTEM_PROMPT).toContain("null");
     expect(BATCH_SYSTEM_PROMPT).toContain("A wrong headline is worse");
@@ -81,9 +89,9 @@ describe("batch message format", () => {
 });
 
 describe("prompt versioning", () => {
-  it("is at v2", () => {
+  it("is at v3", () => {
     // Bump this and PROMPT_VERSION together: cached headlines carry the version
     // they were written under, so a bump is what invalidates them.
-    expect(PROMPT_VERSION).toBe(2);
+    expect(PROMPT_VERSION).toBe(3);
   });
 });

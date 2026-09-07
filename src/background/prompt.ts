@@ -5,8 +5,11 @@
  *
  * v2: reframed around resolving the withheld fact rather than "summarise
  *     accurately". Added the named clickbait patterns and worked examples.
+ * v3: the model kept answering with the article's main topic instead of the
+ *     teased fact — accurate, but it left the tease unresolved. Added the
+ *     priority rule and a counter-example showing that failure.
  */
-export const PROMPT_VERSION = 2;
+export const PROMPT_VERSION = 3;
 
 /**
  * The core of debaiting, shared by both prompts.
@@ -41,7 +44,20 @@ Withholding patterns, and what each needs:
   Give the figure.
 
 Prefer the concrete resolving fact over a general description of the topic. A
-headline that says what happened beats one that says what the article is about.`;
+headline that says what happened beats one that says what the article is about.
+
+This is the rule that matters most, so be deliberate about it:
+
+The resolving fact is often NOT the article's main subject. It may be a single
+sentence late in the text, well after the part the article spends most of its
+words on. Choose it anyway. The reader was promised that specific thing, and
+delivering it is the entire job.
+
+Do not fall back to summarising the article's opening, its overall subject, or
+its most prominent fact when the headline teased something more specific. That
+produces a headline that is accurate and still useless — it leaves the reader
+exactly where the clickbait left them, not knowing the thing they were teased
+with.`;
 
 const STYLE = `Style:
 - Write in the same language as the source. Finnish in, Finnish out.
@@ -71,9 +87,17 @@ Source says: its game gates are closed to stop wild boar crossing and African
 swine fever spreading.
 Rewrite: "Itärajan aidan riistaportit suljettu sikaruton leviämisen estämiseksi"
 
-Note the third example: the resolving fact was one sentence late in the article,
-not its main topic. The withheld fact is what the reader was promised, so it is
-what the headline should deliver.`;
+The third example is the one to study, because the tempting wrong answer is very
+close by. That article spends most of its words on the fence project — 200 km,
+finished early, under budget — and only one sentence on the game gates. So this
+is a plausible but WRONG rewrite:
+
+  "Itärajan 200 kilometrin esteaita valmistui etuajassa ja alitti budjetin"
+
+It is accurate, and it is not clickbait. It is still wrong, because the headline
+asked "what did the fence do?" and this answers "the project finished on time".
+The reader is left exactly where the clickbait left them. Answer the question
+the headline raised, even when it is a minor detail in the text.`;
 
 export const SYSTEM_PROMPT = `You rewrite clickbait news headlines.
 
@@ -85,9 +109,10 @@ ${EXAMPLES}
 
 You will be given the body text of one article. Output the headline only.
 
-If the article genuinely contains no withheld fact — the original headline was
-already plain and descriptive — write a headline that states the article's main
-point instead.`;
+Only if the original headline withheld nothing — it was already plain and
+descriptive — write a headline stating the article's main point instead. Do not
+reach for this because the resolving fact is a minor detail or hard to find;
+that is the normal case, not an exception.`;
 
 export function buildUserMessage(body: string): string {
   return body;
