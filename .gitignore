@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output — regenerate with `npm run build`
+dist/
+.vite/
+*.tsbuildinfo
+
+# Test and coverage output
+coverage/
+.vitest/
+
+# Secrets. No API key belongs in this repo: keys live in chrome.storage.local
+# on the user's own machine. See PRIVACY.md.
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+!tests/fixtures/*.pem
+
+# Editor and OS cruft
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+.npm/

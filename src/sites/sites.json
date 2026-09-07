@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "sites": [
+    {
+      "id": "iltalehti",
+      "label": "Iltalehti",
+      "enabled": true,
+      "hosts": [
+        "www.iltalehti.fi",
+        "iltalehti.fi",
+        "m.iltalehti.fi"
+      ],
+      "article": {
+        "urlPattern": "^/[a-z0-9-]+/a/(?<id>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/?$"
+      },
+      "headline": {
+        "selectors": [
+          "h1.article-headline",
+          "[itemprop='headline']",
+          "article h1",
+          "h1"
+        ]
+      },
+      "lead": {
+        "selectors": [
+          ".article-description",
+          "[itemprop='description']"
+        ]
+      },
+      "body": {
+        "containers": [
+          ".article-body",
+          "article .article-content"
+        ],
+        "paragraphs": [
+          "p.paragraph",
+          "p"
+        ],
+        "strip": [
+          "figure",
+          ".media-caption",
+          ".related-articles-list",
+          ".related-article",
+          ".ad-article",
+          "[class*='mainos']",
+          "[class*='ad-']",
+          "script",
+          "style",
+          "aside"
+        ]
+      },
+      "paywall": {
+        "useJsonLd": true,
+        "selectors": [
+          ".paywall-section",
+          "[class*='paywall']"
+        ],
+        "minFreeChars": 400
+      },
+      "minBodyChars": 400,
+      "maxBodyChars": 12000,
+      "front": {
+        "teaserLinkSelectors": [
+          "a[href*='/a/']"
+        ],
+        "titleSelectors": [
+          ".front-title",
+          "h2",
+          "h3",
+          "span"
+        ],
+        "stateSource": "iltalehti",
+        "minTitleChars": 20
+      }
+    },
+    {
+      "id": "ilta-sanomat",
+      "label": "Ilta-Sanomat",
+      "enabled": true,
+      "hosts": [
+        "www.is.fi",
+        "is.fi",
+        "m.is.fi"
+      ],
+      "article": {
+        "urlPattern": "^/[a-z0-9-]+/art-(?<id>[0-9]+)\\.html$"
+      },
+      "headline": {
+        "selectors": [
+          "h1[class*='article-title']",
+          "article h1",
+          "main h1",
+          "h1"
+        ]
+      },
+      "lead": {
+        "selectors": [
+          "[class*='article-ingress']",
+          "[class*='leadin']"
+        ]
+      },
+      "body": {
+        "containers": [
+          ".article-body"
+        ],
+        "paragraphs": [
+          "p"
+        ],
+        "strip": [
+          "figure",
+          ".related-articles",
+          ".article-tail",
+          "[class*='article-ad']",
+          "[class*='paywall']",
+          "script",
+          "style",
+          "aside"
+        ]
+      },
+      "paywall": {
+        "useJsonLd": true,
+        "selectors": [
+          ".paywall-section"
+        ],
+        "minFreeChars": 400
+      },
+      "minBodyChars": 400,
+      "maxBodyChars": 12000,
+      "front": {
+        "teaserLinkSelectors": [
+          "a[href*='/art-']"
+        ],
+        "titleSelectors": [
+          "[class*='teaser-title']",
+          "[class*='title']",
+          "h2",
+          "h3",
+          "span"
+        ],
+        "stateSource": "next-data",
+        "minTitleChars": 20
+      }
+    }
+  ]
+}

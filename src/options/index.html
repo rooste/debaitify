@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Debaitify — Options</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Debaitify</h1>
+
+      <section>
+        <h2>AI provider</h2>
+        <select id="provider"></select>
+        <p class="hint" id="providerHint"></p>
+
+        <div class="row">
+          <input id="apiKey" type="password" placeholder="API key" autocomplete="off" />
+          <button id="testKey" type="button">Test key</button>
+        </div>
+        <p id="keyStatus" class="status"></p>
+
+        <label for="model">Model</label>
+        <select id="model"></select>
+        <p class="hint" id="modelHint"></p>
+      </section>
+
+      <section>
+        <h2>How headlines are written</h2>
+        <div id="strategy"></div>
+      </section>
+
+      <section>
+        <h2>Sites</h2>
+        <div id="sites"></div>
+      </section>
+
+      <section>
+        <h2>Behaviour</h2>
+        <label>
+          Reveal timeout
+          <input id="revealTimeoutMs" type="range" min="500" max="3000" step="100" />
+          <output id="revealTimeoutOut"></output>
+        </label>
+        <p class="hint">
+          How long the original headline stays hidden before it is shown anyway.
+        </p>
+        <label><input id="debug" type="checkbox" /> Debug logging to the console</label>
+      </section>
+
+      <section>
+        <h2>Cache</h2>
+        <p><span id="cacheCount">0</span> articles cached. <button id="purge" type="button">Clear cache</button></p>
+      </section>
+
+      <section>
+        <h2>Site configuration</h2>
+        <p class="hint">
+          Overrides merged over the bundled configuration. Invalid JSON is
+          discarded wholesale and the bundled config is used — a broken edit
+          cannot brick the extension. Adding a <em>new host</em> also needs a
+          manifest change; overrides can only tune sites that already ship.
+        </p>
+        <textarea id="overrides" rows="14" spellcheck="false"></textarea>
+        <div class="row">
+          <button id="saveOverrides" type="button">Save</button>
+          <button id="resetOverrides" type="button">Reset to defaults</button>
+        </div>
+        <p id="overrideStatus" class="status"></p>
+      </section>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

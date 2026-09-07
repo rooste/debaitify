@@ -1,0 +1,28 @@
+/*
+ * Anti-flash.
+ *
+ * opacity, never display:none or visibility:hidden on a block element — the
+ * headline keeps its box, so resolving it causes no layout shift.
+ *
+ * The animation is a failsafe. If the content script dies before it can reveal
+ * the headline, CSS alone brings it back after 2.5s. There is no code path,
+ * including a thrown exception, that leaves a headline permanently hidden.
+ */
+@keyframes debaitify-failsafe-reveal {
+  to {
+    opacity: 1;
+  }
+}
+
+[data-debaitify="done"],
+[data-debaitify="reverted"] {
+  opacity: 1;
+  transition: opacity 120ms ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-debaitify="done"],
+  [data-debaitify="reverted"] {
+    transition: none;
+  }
+}
