@@ -3,6 +3,7 @@ node_modules/
 
 # Build output — regenerate with `npm run build`
 dist/
+dist-safari/
 .vite/
 *.tsbuildinfo
 
@@ -30,3 +31,12 @@ secrets/
 *.log
 npm-debug.log*
 .npm/
+
+# Xcode. The project itself is committed; build output and the generated
+# extension Resources (a copy of dist-safari/) are not.
+safari/Shared (Extension)/Resources/
+safari/build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/

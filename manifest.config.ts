@@ -1,5 +1,5 @@
 /**
- * NOTE: the two entry points must not share a basename. When both were
+ * NOTE: entry points must not share a basename. When both were
  * `index.ts`, the bundler emitted colliding chunk names and the service-worker
  * loader ended up importing the CONTENT SCRIPT chunk — the extension loaded
  * without error and did nothing at all.
@@ -32,17 +32,12 @@ export default {
       run_at: "document_start",
       all_frames: false,
     },
-    {
-      // Runs in the PAGE's world, which is the only way to read the hydration
-      // state holding each teaser's lead sentence. It reads and postMessages;
-      // it never touches page state and holds no credentials.
-      matches: hostGlobs,
-      js: ["src/content/bridge-main.ts"],
-      run_at: "document_idle",
-      world: "MAIN",
-      all_frames: false,
-    },
   ],
+  // The page-world bridge is injected at runtime by the content script rather
+  // than declared with world: "MAIN". Same effect, but it works on any browser
+  // that supports web-accessible resources — Safari and Firefox included —
+  // instead of depending on the newest and least portable manifest feature.
+  web_accessible_resources: [{ resources: ["bridge.js"], matches: hostGlobs }],
   options_ui: { page: "src/options/index.html", open_in_tab: true },
   action: { default_popup: "src/popup/index.html" },
 } satisfies ManifestV3Export;

@@ -11,7 +11,7 @@ import { extract, findHeadlineByHeuristic } from "./extract";
 import { swap, revert, markReverted, currentOriginal } from "./swap";
 import type { PageStatus } from "./status";
 import { watch, withObserverPaused } from "./navigation";
-import { runFront, listenForLeads } from "./front";
+import { runFront, listenForLeads, injectBridge } from "./front";
 
 /**
  * Content-script lifecycle.
@@ -52,7 +52,9 @@ async function main(): Promise<void> {
     arm(site.headline.selectors, settings.revealTimeoutMs);
     watch(() => void run(site, settings.revealTimeoutMs));
   } else {
+    // Order matters: start listening before the bridge can post.
     listenForLeads();
+    injectBridge();
     watch(() => void runFront(site, settings));
   }
 

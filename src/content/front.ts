@@ -1,4 +1,4 @@
-import { runtime } from "../shared/platform";
+import { runtime, getURL } from "../shared/platform";
 import { log } from "../shared/log";
 import { normalize, asHtmlElement } from "../shared/text";
 import { selectFirst } from "../sites/select";
@@ -36,6 +36,28 @@ interface Teaser {
   id: string;
   title: string;
   elements: HTMLElement[];
+}
+
+/**
+ * Load the page-world bridge.
+ *
+ * The lead sentences live in the page's own globals, which an isolated content
+ * script cannot see. Injecting a <script> pointing at a web-accessible resource
+ * runs it in the page's world — the same effect as declaring world: "MAIN", but
+ * it works on any browser with web-accessible resources rather than depending on
+ * the newest manifest feature. That portability is what makes a Safari build
+ * possible at all.
+ */
+export function injectBridge(): void {
+  const el = document.createElement("script");
+  el.src = getURL("bridge.js");
+  el.async = false;
+  // Tidy up once it has run; the bridge keeps working via its message listener.
+  el.addEventListener("load", () => el.remove());
+  el.addEventListener("error", () =>
+    log.warn("bridge failed to load — page CSP may be blocking it"),
+  );
+  (document.head ?? document.documentElement).append(el);
 }
 
 export function listenForLeads(): void {

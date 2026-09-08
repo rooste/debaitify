@@ -59,6 +59,9 @@ export const runtime = {
   },
 };
 
+/** Absolute URL of a packaged file, e.g. runtime.getURL("bridge.js"). */
+export const getURL = (path: string): string => ext().runtime.getURL(path);
+
 export const onInstalled = (
   handler: (details: chrome.runtime.InstalledDetails) => void,
 ): void => {

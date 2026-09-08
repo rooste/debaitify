@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify:dist": "node scripts/check-bundles.mjs"
+    "verify:dist": "node scripts/check-bundles.mjs",
+    "build:safari": "DEBAITIFY_TARGET=safari tsc --noEmit && DEBAITIFY_TARGET=safari vite build && node scripts/check-bundles.mjs dist-safari && node scripts/sync-safari.mjs",
+    "sync:safari": "node scripts/sync-safari.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",

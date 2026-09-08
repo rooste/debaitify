@@ -23,7 +23,7 @@ const files = [];
     if (e.isDirectory()) walk(p);
     else if (e.name.endsWith(".js")) files.push(p);
   }
-})("dist");
+})(process.argv[2] ?? "dist");
 
 const tmp = mkdtempSync(join(tmpdir(), "debaitify-check-"));
 const parses = (src, ext) => {
