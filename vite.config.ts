@@ -15,9 +15,22 @@ export default defineConfig({
       // The bridge is injected by URL at runtime, so its filename must be
       // predictable — it cannot carry a content hash like the other chunks.
       input: { bridge: resolve(__dirname, "src/content/bridge-main.ts") },
+      // Content hashes are for HTTP caching and are pointless inside a packaged
+      // app — worse, they change every rebuild, which would break the Xcode
+      // project's file references. The Safari build therefore uses stable names.
       output: {
         entryFileNames: (chunk) =>
-          chunk.name === "bridge" ? "bridge.js" : "assets/[name]-[hash].js",
+          chunk.name === "bridge"
+            ? "bridge.js"
+            : target === "safari"
+              ? "assets/[name].js"
+              : "assets/[name]-[hash].js",
+        ...(target === "safari"
+          ? {
+              chunkFileNames: "assets/[name].js",
+              assetFileNames: "assets/[name].[ext]",
+            }
+          : {}),
       },
     },
     // "hidden" emits the .map files but NOT the //# sourceMappingURL comment.

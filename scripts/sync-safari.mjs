@@ -9,16 +9,16 @@
 import { existsSync, rmSync, cpSync, mkdirSync } from "node:fs";
 
 const SRC = "dist-safari";
-const DEST = "safari/Shared (Extension)/Resources";
+const DEST = "safari/Debaitify/Shared (Extension)/Resources";
 
 if (!existsSync(SRC)) {
   console.error(`✗ ${SRC}/ not found — run \`npm run build:safari\` first.`);
   process.exit(1);
 }
 
-if (!existsSync("safari")) {
+if (!existsSync("safari/Debaitify")) {
   console.log(
-    `• safari/ does not exist yet — build output is in ${SRC}/.\n` +
+    `• safari/Debaitify/ does not exist yet — build output is in ${SRC}/.\n` +
       `  Create the Xcode project with:\n` +
       `    xcrun safari-web-extension-converter ${SRC} \\\n` +
       `      --project-location safari --app-name Debaitify --bundle-identifier fi.rooste.debaitify`,

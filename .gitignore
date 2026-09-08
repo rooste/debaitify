@@ -34,7 +34,7 @@ npm-debug.log*
 
 # Xcode. The project itself is committed; build output and the generated
 # extension Resources (a copy of dist-safari/) are not.
-safari/Shared (Extension)/Resources/
+safari/Debaitify/Shared (Extension)/Resources/
 safari/build/
 DerivedData/
 *.xcuserstate

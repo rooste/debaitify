@@ -1,0 +1,989 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6A303628304FA89000C9B2E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A303627304FA89000C9B2E2 /* AppDelegate.swift */; };
+		6A30362A304FA89000C9B2E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A303629304FA89000C9B2E2 /* SceneDelegate.swift */; };
+		6A30362D304FA89000C9B2E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30362B304FA89000C9B2E2 /* LaunchScreen.storyboard */; };
+		6A303630304FA89000C9B2E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30362E304FA89000C9B2E2 /* Main.storyboard */; };
+		6A303639304FA89000C9B2E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A303638304FA89000C9B2E2 /* AppDelegate.swift */; };
+		6A30363C304FA89000C9B2E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A30363A304FA89000C9B2E2 /* Main.storyboard */; };
+		6A303643304FA89000C9B2E2 /* Debaitify Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6A303642304FA89000C9B2E2 /* Debaitify Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6A30364D304FA89000C9B2E2 /* Debaitify Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6A30364C304FA89000C9B2E2 /* Debaitify Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6A303652304FA89000C9B2E2 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A303617304FA88F00C9B2E2 /* Main.html */; };
+		6A303653304FA89000C9B2E2 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 6A303617304FA88F00C9B2E2 /* Main.html */; };
+		6A303654304FA89000C9B2E2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A303619304FA88F00C9B2E2 /* Icon.png */; };
+		6A303655304FA89000C9B2E2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A303619304FA88F00C9B2E2 /* Icon.png */; };
+		6A303656304FA89000C9B2E2 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361A304FA88F00C9B2E2 /* Style.css */; };
+		6A303657304FA89000C9B2E2 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361A304FA88F00C9B2E2 /* Style.css */; };
+		6A303658304FA89000C9B2E2 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361B304FA88F00C9B2E2 /* Script.js */; };
+		6A303659304FA89000C9B2E2 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361B304FA88F00C9B2E2 /* Script.js */; };
+		6A30365A304FA89000C9B2E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30361C304FA88F00C9B2E2 /* ViewController.swift */; };
+		6A30365B304FA89000C9B2E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30361C304FA88F00C9B2E2 /* ViewController.swift */; };
+		6A30365C304FA89000C9B2E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361D304FA89000C9B2E2 /* Assets.xcassets */; };
+		6A30365D304FA89000C9B2E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A30361D304FA89000C9B2E2 /* Assets.xcassets */; };
+		6A30365E304FA89000C9B2E2 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30361F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift */; };
+		6A30365F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A30361F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift */; };
+		6A303677304FA89000C9B2E2 /* service-worker-loader.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A303671304FA89000C9B2E2 /* service-worker-loader.js */; };
+		6A303678304FA89000C9B2E2 /* bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A303672304FA89000C9B2E2 /* bridge.js */; };
+		6A303679304FA89000C9B2E2 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A303674304FA89000C9B2E2 /* manifest.json */; };
+		6A30367A304FA89000C9B2E2 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 6A303675304FA89000C9B2E2 /* assets */; };
+		6A30367B304FA89000C9B2E2 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 6A303676304FA89000C9B2E2 /* src */; };
+		6A30367C304FA89000C9B2E2 /* service-worker-loader.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A303671304FA89000C9B2E2 /* service-worker-loader.js */; };
+		6A30367D304FA89000C9B2E2 /* bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 6A303672304FA89000C9B2E2 /* bridge.js */; };
+		6A30367E304FA89000C9B2E2 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A303674304FA89000C9B2E2 /* manifest.json */; };
+		6A30367F304FA89000C9B2E2 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 6A303675304FA89000C9B2E2 /* assets */; };
+		6A303680304FA89000C9B2E2 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 6A303676304FA89000C9B2E2 /* src */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6A303644304FA89000C9B2E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A303611304FA88F00C9B2E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A303641304FA89000C9B2E2;
+			remoteInfo = "Debaitify Extension (iOS)";
+		};
+		6A30364E304FA89000C9B2E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A303611304FA88F00C9B2E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A30364B304FA89000C9B2E2;
+			remoteInfo = "Debaitify Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6A303665304FA89000C9B2E2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6A303643304FA89000C9B2E2 /* Debaitify Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A30366C304FA89000C9B2E2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6A30364D304FA89000C9B2E2 /* Debaitify Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6A303618304FA88F00C9B2E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		6A303619304FA88F00C9B2E2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		6A30361A304FA88F00C9B2E2 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		6A30361B304FA88F00C9B2E2 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		6A30361C304FA88F00C9B2E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6A30361D304FA89000C9B2E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A30361F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		6A303624304FA89000C9B2E2 /* Debaitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debaitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A303627304FA89000C9B2E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6A303629304FA89000C9B2E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		6A30362C304FA89000C9B2E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6A30362F304FA89000C9B2E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6A303631304FA89000C9B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A303636304FA89000C9B2E2 /* Debaitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debaitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A303638304FA89000C9B2E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6A30363B304FA89000C9B2E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6A30363D304FA89000C9B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A303642304FA89000C9B2E2 /* Debaitify Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Debaitify Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A303647304FA89000C9B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A30364C304FA89000C9B2E2 /* Debaitify Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Debaitify Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A303651304FA89000C9B2E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A303671304FA89000C9B2E2 /* service-worker-loader.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "service-worker-loader.js"; path = "Resources/service-worker-loader.js"; sourceTree = "<group>"; };
+		6A303672304FA89000C9B2E2 /* bridge.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = bridge.js; path = Resources/bridge.js; sourceTree = "<group>"; };
+		6A303673304FA89000C9B2E2 /* bridge.js.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = bridge.js.map; path = Resources/bridge.js.map; sourceTree = "<group>"; };
+		6A303674304FA89000C9B2E2 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+		6A303675304FA89000C9B2E2 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = Resources/assets; sourceTree = "<group>"; };
+		6A303676304FA89000C9B2E2 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = Resources/src; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A303621304FA89000C9B2E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303633304FA89000C9B2E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A30363F304FA89000C9B2E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303649304FA89000C9B2E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6A303610304FA88F00C9B2E2 = {
+			isa = PBXGroup;
+			children = (
+				6A303615304FA88F00C9B2E2 /* Shared (App) */,
+				6A30361E304FA89000C9B2E2 /* Shared (Extension) */,
+				6A303626304FA89000C9B2E2 /* iOS (App) */,
+				6A303637304FA89000C9B2E2 /* macOS (App) */,
+				6A303646304FA89000C9B2E2 /* iOS (Extension) */,
+				6A303650304FA89000C9B2E2 /* macOS (Extension) */,
+				6A303625304FA89000C9B2E2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6A303615304FA88F00C9B2E2 /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				6A30361C304FA88F00C9B2E2 /* ViewController.swift */,
+				6A30361D304FA89000C9B2E2 /* Assets.xcassets */,
+				6A303616304FA88F00C9B2E2 /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		6A303616304FA88F00C9B2E2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6A303617304FA88F00C9B2E2 /* Main.html */,
+				6A303619304FA88F00C9B2E2 /* Icon.png */,
+				6A30361A304FA88F00C9B2E2 /* Style.css */,
+				6A30361B304FA88F00C9B2E2 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6A30361E304FA89000C9B2E2 /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				6A303670304FA89000C9B2E2 /* Resources */,
+				6A30361F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		6A303625304FA89000C9B2E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A303624304FA89000C9B2E2 /* Debaitify.app */,
+				6A303636304FA89000C9B2E2 /* Debaitify.app */,
+				6A303642304FA89000C9B2E2 /* Debaitify Extension.appex */,
+				6A30364C304FA89000C9B2E2 /* Debaitify Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6A303626304FA89000C9B2E2 /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				6A303627304FA89000C9B2E2 /* AppDelegate.swift */,
+				6A303629304FA89000C9B2E2 /* SceneDelegate.swift */,
+				6A30362B304FA89000C9B2E2 /* LaunchScreen.storyboard */,
+				6A30362E304FA89000C9B2E2 /* Main.storyboard */,
+				6A303631304FA89000C9B2E2 /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		6A303637304FA89000C9B2E2 /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				6A303638304FA89000C9B2E2 /* AppDelegate.swift */,
+				6A30363A304FA89000C9B2E2 /* Main.storyboard */,
+				6A30363D304FA89000C9B2E2 /* Info.plist */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		6A303646304FA89000C9B2E2 /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				6A303647304FA89000C9B2E2 /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		6A303650304FA89000C9B2E2 /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				6A303651304FA89000C9B2E2 /* Info.plist */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		6A303670304FA89000C9B2E2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6A303671304FA89000C9B2E2 /* service-worker-loader.js */,
+				6A303672304FA89000C9B2E2 /* bridge.js */,
+				6A303673304FA89000C9B2E2 /* bridge.js.map */,
+				6A303674304FA89000C9B2E2 /* manifest.json */,
+				6A303675304FA89000C9B2E2 /* assets */,
+				6A303676304FA89000C9B2E2 /* src */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A303623304FA89000C9B2E2 /* Debaitify (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A303666304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify (iOS)" */;
+			buildPhases = (
+				6A303620304FA89000C9B2E2 /* Sources */,
+				6A303621304FA89000C9B2E2 /* Frameworks */,
+				6A303622304FA89000C9B2E2 /* Resources */,
+				6A303665304FA89000C9B2E2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A303645304FA89000C9B2E2 /* PBXTargetDependency */,
+			);
+			name = "Debaitify (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Debaitify (iOS)";
+			productReference = 6A303624304FA89000C9B2E2 /* Debaitify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6A303635304FA89000C9B2E2 /* Debaitify (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A30366D304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify (macOS)" */;
+			buildPhases = (
+				6A303632304FA89000C9B2E2 /* Sources */,
+				6A303633304FA89000C9B2E2 /* Frameworks */,
+				6A303634304FA89000C9B2E2 /* Resources */,
+				6A30366C304FA89000C9B2E2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A30364F304FA89000C9B2E2 /* PBXTargetDependency */,
+			);
+			name = "Debaitify (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Debaitify (macOS)";
+			productReference = 6A303636304FA89000C9B2E2 /* Debaitify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6A303641304FA89000C9B2E2 /* Debaitify Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A303662304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify Extension (iOS)" */;
+			buildPhases = (
+				6A30363E304FA89000C9B2E2 /* Sources */,
+				6A30363F304FA89000C9B2E2 /* Frameworks */,
+				6A303640304FA89000C9B2E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Debaitify Extension (iOS)";
+			packageProductDependencies = (
+			);
+			productName = "Debaitify Extension (iOS)";
+			productReference = 6A303642304FA89000C9B2E2 /* Debaitify Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		6A30364B304FA89000C9B2E2 /* Debaitify Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A303669304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify Extension (macOS)" */;
+			buildPhases = (
+				6A303648304FA89000C9B2E2 /* Sources */,
+				6A303649304FA89000C9B2E2 /* Frameworks */,
+				6A30364A304FA89000C9B2E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Debaitify Extension (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "Debaitify Extension (macOS)";
+			productReference = 6A30364C304FA89000C9B2E2 /* Debaitify Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A303611304FA88F00C9B2E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					6A303623304FA89000C9B2E2 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					6A303635304FA89000C9B2E2 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					6A303641304FA89000C9B2E2 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					6A30364B304FA89000C9B2E2 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 6A303614304FA88F00C9B2E2 /* Build configuration list for PBXProject "Debaitify" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6A303610304FA88F00C9B2E2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6A303625304FA89000C9B2E2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A303623304FA89000C9B2E2 /* Debaitify (iOS) */,
+				6A303635304FA89000C9B2E2 /* Debaitify (macOS) */,
+				6A303641304FA89000C9B2E2 /* Debaitify Extension (iOS) */,
+				6A30364B304FA89000C9B2E2 /* Debaitify Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A303622304FA89000C9B2E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A303654304FA89000C9B2E2 /* Icon.png in Resources */,
+				6A30362D304FA89000C9B2E2 /* LaunchScreen.storyboard in Resources */,
+				6A303652304FA89000C9B2E2 /* Main.html in Resources */,
+				6A303658304FA89000C9B2E2 /* Script.js in Resources */,
+				6A30365C304FA89000C9B2E2 /* Assets.xcassets in Resources */,
+				6A303630304FA89000C9B2E2 /* Main.storyboard in Resources */,
+				6A303656304FA89000C9B2E2 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303634304FA89000C9B2E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A303655304FA89000C9B2E2 /* Icon.png in Resources */,
+				6A303657304FA89000C9B2E2 /* Style.css in Resources */,
+				6A30363C304FA89000C9B2E2 /* Main.storyboard in Resources */,
+				6A303659304FA89000C9B2E2 /* Script.js in Resources */,
+				6A30365D304FA89000C9B2E2 /* Assets.xcassets in Resources */,
+				6A303653304FA89000C9B2E2 /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303640304FA89000C9B2E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A30367C304FA89000C9B2E2 /* service-worker-loader.js in Resources */,
+				6A30367F304FA89000C9B2E2 /* assets in Resources */,
+				6A30367E304FA89000C9B2E2 /* manifest.json in Resources */,
+				6A30367D304FA89000C9B2E2 /* bridge.js in Resources */,
+				6A303680304FA89000C9B2E2 /* src in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A30364A304FA89000C9B2E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A303677304FA89000C9B2E2 /* service-worker-loader.js in Resources */,
+				6A30367A304FA89000C9B2E2 /* assets in Resources */,
+				6A303679304FA89000C9B2E2 /* manifest.json in Resources */,
+				6A303678304FA89000C9B2E2 /* bridge.js in Resources */,
+				6A30367B304FA89000C9B2E2 /* src in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A303620304FA89000C9B2E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A30365A304FA89000C9B2E2 /* ViewController.swift in Sources */,
+				6A303628304FA89000C9B2E2 /* AppDelegate.swift in Sources */,
+				6A30362A304FA89000C9B2E2 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303632304FA89000C9B2E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A30365B304FA89000C9B2E2 /* ViewController.swift in Sources */,
+				6A303639304FA89000C9B2E2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A30363E304FA89000C9B2E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A30365E304FA89000C9B2E2 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A303648304FA89000C9B2E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A30365F304FA89000C9B2E2 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6A303645304FA89000C9B2E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A303641304FA89000C9B2E2 /* Debaitify Extension (iOS) */;
+			targetProxy = 6A303644304FA89000C9B2E2 /* PBXContainerItemProxy */;
+		};
+		6A30364F304FA89000C9B2E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A30364B304FA89000C9B2E2 /* Debaitify Extension (macOS) */;
+			targetProxy = 6A30364E304FA89000C9B2E2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6A303617304FA88F00C9B2E2 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A303618304FA88F00C9B2E2 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		6A30362B304FA89000C9B2E2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A30362C304FA89000C9B2E2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6A30362E304FA89000C9B2E2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A30362F304FA89000C9B2E2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6A30363A304FA89000C9B2E2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A30363B304FA89000C9B2E2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6A303660304FA89000C9B2E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6A303661304FA89000C9B2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		6A303663304FA89000C9B2E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Debaitify Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify.Extension;
+				PRODUCT_NAME = "Debaitify Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6A303664304FA89000C9B2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Debaitify Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify.Extension;
+				PRODUCT_NAME = "Debaitify Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A303667304FA89000C9B2E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Debaitify;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify;
+				PRODUCT_NAME = Debaitify;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6A303668304FA89000C9B2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Debaitify;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify;
+				PRODUCT_NAME = Debaitify;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A30366A304FA89000C9B2E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Debaitify Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify.Extension;
+				PRODUCT_NAME = "Debaitify Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6A30366B304FA89000C9B2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Debaitify Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify.Extension;
+				PRODUCT_NAME = "Debaitify Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6A30366E304FA89000C9B2E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Debaitify;
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify;
+				PRODUCT_NAME = Debaitify;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6A30366F304FA89000C9B2E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Debaitify;
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fi.rooste.debaitify;
+				PRODUCT_NAME = Debaitify;
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A303614304FA88F00C9B2E2 /* Build configuration list for PBXProject "Debaitify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A303660304FA89000C9B2E2 /* Debug */,
+				6A303661304FA89000C9B2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A303662304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A303663304FA89000C9B2E2 /* Debug */,
+				6A303664304FA89000C9B2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A303666304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A303667304FA89000C9B2E2 /* Debug */,
+				6A303668304FA89000C9B2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A303669304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A30366A304FA89000C9B2E2 /* Debug */,
+				6A30366B304FA89000C9B2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A30366D304FA89000C9B2E2 /* Build configuration list for PBXNativeTarget "Debaitify (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A30366E304FA89000C9B2E2 /* Debug */,
+				6A30366F304FA89000C9B2E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6A303611304FA88F00C9B2E2 /* Project object */;
+}
