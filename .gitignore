@@ -19,6 +19,15 @@ coverage/
 secrets/
 *.pem
 !tests/fixtures/*.pem
+# Anything that announces itself as a credential. This repo is public and the
+# extension is bring-your-own-key, so loose key files are a live hazard.
+*.secret
+*.key
+key.*
+*apikey*
+*api-key*
+*.token
+.credentials
 
 # Editor and OS cruft
 .DS_Store
